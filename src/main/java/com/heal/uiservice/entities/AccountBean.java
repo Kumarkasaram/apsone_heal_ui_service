@@ -7,12 +7,15 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountBean extends BaseEntity {
     private int accountId;
+    @JsonIgnore
     private int status;
     private int timezoneMilli;
     private int timeOffset;
@@ -24,6 +27,4 @@ public class AccountBean extends BaseEntity {
     private String abbreviation;
     private String offsetName;
     private String userDetailsId;
-    private LocalDateTime createdTime;
-    private LocalDateTime updatedTime;
-}
+  }

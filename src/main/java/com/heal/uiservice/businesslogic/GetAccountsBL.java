@@ -54,8 +54,8 @@ public class GetAccountsBL implements BusinessLogic<String, UserAccessAccountsBe
 
         UserAccessDetails userAccessDetails;
         try {
-            //userAccessDetails = jdbcTemplateDao.fetchUserAccessDetailsUsingIdentifier(userId);
-            userAccessDetails = userAccessRepository.fetchUserAccessDetailsUsingIdentifier(userId);
+            userAccessDetails = jdbcTemplateDao.fetchUserAccessDetailsUsingIdentifier(userId);
+          //  userAccessDetails = userAccessRepository.fetchUserAccessDetailsUsingIdentifier(userId);
             if (null == userAccessDetails || null == userAccessDetails.getAccessDetails()) {
                 log.error("Invalid user access details. Details: Required access details for user [{}] is unavailable", userId);
                 throw new ServerException("Invalid user access details");
@@ -74,8 +74,8 @@ public class GetAccountsBL implements BusinessLogic<String, UserAccessAccountsBe
         }
 
 
-        //List<AccountBean> accessibleAccounts = jdbcTemplateDao.getAccountDetails(Constants.TIME_ZONE_TAG, Constants.ACCOUNT_TABLE_NAME_MYSQL_DEFAULT);
-        List<AccountBean> accessibleAccounts = accountRepository.getAccountDetails(Constants.TIME_ZONE_TAG, Constants.ACCOUNT_TABLE_NAME_MYSQL_DEFAULT);
+        List<AccountBean> accessibleAccounts = jdbcTemplateDao.getAccountDetails(Constants.TIME_ZONE_TAG, Constants.ACCOUNT_TABLE_NAME_MYSQL_DEFAULT);
+        //List<AccountBean> accessibleAccounts = accountRepository.getAccountDetails(Constants.TIME_ZONE_TAG, Constants.ACCOUNT_TABLE_NAME_MYSQL_DEFAULT);
         if(null == accessibleAccounts) {
             log.error("Account information unavailable");
             throw new ServerException("Account information unavailable");
