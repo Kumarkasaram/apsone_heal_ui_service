@@ -2,9 +2,7 @@ package com.heal.uiservice.businesslogic;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.heal.uiservice.dao.mysql.AccountRepository;
 import com.heal.uiservice.dao.mysql.JDBCTemplateDao;
-import com.heal.uiservice.dao.mysql.UserAccessRepository;
 import com.heal.uiservice.entities.*;
 import com.heal.uiservice.exception.ClientException;
 import com.heal.uiservice.exception.DataProcessingException;
@@ -23,10 +21,6 @@ import java.util.stream.Collectors;
 @Component
 public class GetAccountsBL implements BusinessLogic<String, UserAccessAccountsBean, List<AccountBean>> {
 
-    @Autowired
-    UserAccessRepository<UserAccessDetails, Integer> userAccessRepository;
-    @Autowired
-    AccountRepository<Account, Integer> accountRepository;
 
     @Autowired
     JDBCTemplateDao jdbcTemplateDao;
@@ -55,7 +49,6 @@ public class GetAccountsBL implements BusinessLogic<String, UserAccessAccountsBe
         UserAccessDetails userAccessDetails;
         try {
             userAccessDetails = jdbcTemplateDao.fetchUserAccessDetailsUsingIdentifier(userId);
-          //  userAccessDetails = userAccessRepository.fetchUserAccessDetailsUsingIdentifier(userId);
             if (null == userAccessDetails || null == userAccessDetails.getAccessDetails()) {
                 log.error("Invalid user access details. Details: Required access details for user [{}] is unavailable", userId);
                 throw new ServerException("Invalid user access details");
@@ -75,7 +68,6 @@ public class GetAccountsBL implements BusinessLogic<String, UserAccessAccountsBe
 
 
         List<AccountBean> accessibleAccounts = jdbcTemplateDao.getAccountDetails(Constants.TIME_ZONE_TAG, Constants.ACCOUNT_TABLE_NAME_MYSQL_DEFAULT);
-        //List<AccountBean> accessibleAccounts = accountRepository.getAccountDetails(Constants.TIME_ZONE_TAG, Constants.ACCOUNT_TABLE_NAME_MYSQL_DEFAULT);
         if(null == accessibleAccounts) {
             log.error("Account information unavailable");
             throw new ServerException("Account information unavailable");
