@@ -43,7 +43,7 @@ public class JDBCTemplateDao {
         return userAccessDetails;
     }
 
-    public List<AccountBean> getAccountDetails(String  account, String timezone) {
+    public List<AccountBean> getAccountDetails( String timezone,String  account) {
         String sqlQuery_accountBean = "SELECT a.id , a.name , mt.timeoffset ,a.identifier ,mt.time_zone_id , a.updated_time , a.user_details_id , mt.timeoffset , mt.abbreviation , offset_name , a.user_details_id FROM account a, tag_mapping tm, mst_timezone mt, tag_details td where tm.object_id = a.id and tm.object_ref_table = ?  and tm.tag_id = td.id and td.name = ?  and mt.id = tm.tag_key and a.status = 1";
         List<AccountBean> accountList = jdbcTemplate.query(sqlQuery_accountBean , (RowMapper<AccountBean>) (rs, rowNum) ->  new AccountBean(
                 rs.getInt("id"),
