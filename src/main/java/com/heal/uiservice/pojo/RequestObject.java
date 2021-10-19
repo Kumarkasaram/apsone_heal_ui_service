@@ -8,9 +8,9 @@ import java.util.TreeMap;
 
 @Slf4j
 @Data
-public class RequestObject {
+public class RequestObject<T> {
 
-    private String body;
+    private T body;
     private Map<String, String> params = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private Map<String, String> headers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private Map<String, String[]> queryParams = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface BusinessLogic<T, V, R> {
-    UtilityBean<T> clientValidation(RequestObject requestObject) throws ClientException;
+    UtilityBean<T> clientValidation(RequestObject<T> requestObject) throws ClientException;
     V serverValidation(UtilityBean<T> utilityBean) throws ServerException;
     R process(V bean) throws DataProcessingException;
 }

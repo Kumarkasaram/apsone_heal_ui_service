@@ -32,7 +32,8 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                     .build();
 
         }
-        private ApiInfo metaData() {
+        @SuppressWarnings("unused")
+		private ApiInfo metaData() {
             return new ApiInfo(
                     "Spring Boot REST API",
                     "Spring Boot REST API for Account services",
