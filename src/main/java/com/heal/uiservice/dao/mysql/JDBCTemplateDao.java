@@ -26,6 +26,7 @@ public class JDBCTemplateDao {
         String sqlQuery_userAccess = "select * from  user_access_details where user_identifier  = ?";
         UserAccessDetails userAccessDetails = jdbcTemplate.queryForObject(
                 sqlQuery_userAccess, new UserAccessDetailsMapper(), identifier);
+       
         return userAccessDetails;
     }
 
