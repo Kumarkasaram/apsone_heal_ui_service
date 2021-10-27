@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="LOG_LOCATION" value="${LOG_PATH}/heal-uiservice.log"/>
+    <property name="LOG_LOCATION" value="logs/heal-ui-service.log"/>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_LOCATION}</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/heal-uiservice_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>logs/heal-ui-service_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>15MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>10GB</totalSizeCap>
@@ -17,11 +17,11 @@
         </encoder>
     </appender>
 
-    <logger name="com.heal.actiondetector" level="DEBUG" additivity="false">
+    <logger name="com.heal.dashboard.service" level="INFO" additivity="false">
         <appender-ref ref="FILE"/>
     </logger>
 
-    <root level = "DEBUG">
+    <root level = "WARN">
         <appender-ref ref = "FILE"/>
     </root>
 
