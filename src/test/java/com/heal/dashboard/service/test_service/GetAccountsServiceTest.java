@@ -14,11 +14,11 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
-import com.heal.dashboard.service.businesslogic.GetAccountsBL;
+import com.heal.dashboard.service.businesslogic.account.GetAccountsBL;
 import com.heal.dashboard.service.entities.AccountBean;
 import com.heal.dashboard.service.entities.AccountMappingBean;
 import com.heal.dashboard.service.entities.UserAccessAccountsBean;
-import com.heal.dashboard.service.entities.UserAccessDetails;
+import com.heal.dashboard.service.entities.UserAccessBean;
 import com.heal.dashboard.service.entities.UtilityBean;
 import com.heal.dashboard.service.exception.ClientException;
 import com.heal.dashboard.service.pojo.RequestObject;
@@ -26,7 +26,7 @@ import com.heal.dashboard.service.service.GetAccountsService;
 import com.heal.dashboard.service.util.Constants;
 
 @RunWith(SpringRunner.class)
-public class GetAccountsServiceTest<T> {
+public class GetAccountsServiceTest {
 
 	
 
@@ -37,10 +37,10 @@ public class GetAccountsServiceTest<T> {
     @Mock
     List<AccountBean> accountBeansList;
     @Mock
-    UserAccessDetails userAccessDetails;
+    UserAccessBean userAccessDetails;
    
     UserAccessAccountsBean accessAccountsBean;
-    RequestObject<T> requestObject;
+    RequestObject requestObject;
     
     @Before
     public void setup() {
@@ -53,7 +53,7 @@ public class GetAccountsServiceTest<T> {
         accountBeansList.add(accountBean);
 
 //      setting up mock data in  userAccessDetails
-        userAccessDetails = new UserAccessDetails();
+        userAccessDetails = new UserAccessBean();
         userAccessDetails.setAccessDetails("{\"accounts\": [\"*\"]}");
         userAccessDetails.setId(1);
         userAccessDetails.setUpdatedTime(LocalDateTime.now());
@@ -61,7 +61,7 @@ public class GetAccountsServiceTest<T> {
         userAccessDetails.setUserIdentifier("7640123a-fbde-4fe5-9812-581cd1e3a9c1");
         accessAccountsBean = new UserAccessAccountsBean(new Gson().fromJson(userAccessDetails.getAccessDetails(), AccountMappingBean.class), accountBeansList);
     	
-        requestObject = new RequestObject<T>();
+        requestObject = new RequestObject();
         requestObject.addHeaders(Constants.AUTHORIZATION_TOKEN, "7640123a-fbde-4fe5-9812-581cd1e3a9c1");
     	
     }	
@@ -88,4 +88,3 @@ public class GetAccountsServiceTest<T> {
 	    }
 	
 }
-

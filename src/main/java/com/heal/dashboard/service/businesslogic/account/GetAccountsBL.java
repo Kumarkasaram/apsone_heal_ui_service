@@ -1,24 +1,25 @@
-package com.heal.dashboard.service.businesslogic;
+package com.heal.dashboard.service.businesslogic.account;
 
 
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.heal.dashboard.service.dao.mysql.AccountDao;
-import com.heal.dashboard.service.exception.ClientException;
-import com.heal.dashboard.service.exception.DataProcessingException;
-import com.heal.dashboard.service.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.heal.dashboard.service.businesslogic.BusinessLogic;
+import com.heal.dashboard.service.dao.mysql.AccountDao;
 import com.heal.dashboard.service.entities.AccountBean;
 import com.heal.dashboard.service.entities.AccountMappingBean;
 import com.heal.dashboard.service.entities.UserAccessAccountsBean;
-import com.heal.dashboard.service.entities.UserAccessDetails;
+import com.heal.dashboard.service.entities.UserAccessBean;
 import com.heal.dashboard.service.entities.UtilityBean;
+import com.heal.dashboard.service.exception.ClientException;
+import com.heal.dashboard.service.exception.DataProcessingException;
+import com.heal.dashboard.service.exception.ServerException;
 import com.heal.dashboard.service.pojo.RequestObject;
 import com.heal.dashboard.service.util.Constants;
 
@@ -53,7 +54,7 @@ public class GetAccountsBL implements BusinessLogic<String, UserAccessAccountsBe
     public UserAccessAccountsBean serverValidation(UtilityBean<String> utilityBean) throws ServerException {
         String userId = utilityBean.getPojoObject();
 
-        	UserAccessDetails  userAccessDetails = accountdao.fetchUserAccessDetailsUsingIdentifier(userId);
+        	UserAccessBean  userAccessDetails = accountdao.fetchUserAccessDetailsUsingIdentifier(userId);
             if (null == userAccessDetails || null == userAccessDetails.getAccessDetails()) {
                 log.error("Invalid user access details. Details: Required access details for user [{}] is unavailable", userId);
                 throw new ServerException("Invalid user access details");

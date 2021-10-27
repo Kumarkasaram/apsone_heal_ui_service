@@ -1,6 +1,6 @@
 package com.heal.dashboard.service.test_service;
 
-import com.heal.dashboard.service.businesslogic.UserTimezoneBL;
+import com.heal.dashboard.service.businesslogic.timezone.UserTimezoneBL;
 import com.heal.dashboard.service.exception.ClientException;
 import com.heal.dashboard.service.exception.CustomExceptionHandler;
 import org.junit.Assert;
@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.heal.dashboard.service.entities.UserAttributeBeen;
 import com.heal.dashboard.service.entities.UserTimezonePojo;

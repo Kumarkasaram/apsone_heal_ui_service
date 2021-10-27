@@ -2,18 +2,19 @@ package com.heal.dashboard.service.dao.mysql;
 
 
 
-import com.heal.dashboard.service.entities.AccountBean;
-import com.heal.dashboard.service.entities.UserAccessDetails;
-import com.heal.dashboard.service.exception.ServerException;
+import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.heal.dashboard.service.entities.AccountBean;
+import com.heal.dashboard.service.entities.UserAccessBean;
+import com.heal.dashboard.service.exception.ServerException;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Repository
@@ -22,14 +23,14 @@ public class AccountDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-	public UserAccessDetails fetchUserAccessDetailsUsingIdentifier(String userIdentifier) throws ServerException {
+	public UserAccessBean fetchUserAccessDetailsUsingIdentifier(String userIdentifier) throws ServerException {
 		try {
 			String query = "select a.access_details, a.user_identifier from user_access_details a where user_identifier=?";
-			return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(UserAccessDetails.class),
+			return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(UserAccessBean.class),
 					userIdentifier);
 		} catch (DataAccessException e) {
 			log.error("Error while fetching user access information for user [{}]. Details: ", userIdentifier, e);
-			throw new ServerException("\"Invalid input parameter/s provided. Details:, UserIdentifier :"+userIdentifier);
+			throw new ServerException("Error in fetchUserAccessDetailsUsingIdentifier () method , Invalid input parameter provided :, UserIdentifier :"+userIdentifier);
 		}
 	}
 
@@ -40,5 +41,16 @@ public class AccountDao {
         return jdbcTemplate.query(query, new Object[]{accountTableName, timezoneKey}, BeanPropertyRowMapper.newInstance(AccountBean.class));
    
     }
+    
+ 
+   
+    public  List<Integer> getTransactionsIdsForAccount(int accountId) throws ServerException {
+  		try {
+  			String query = "select id from transaction where account_id=? and status=1";
+  			return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Integer.class),accountId);
+  		} catch (DataAccessException e) {
+  			log.error("Error while fetching controller information", e);
+  			throw new ServerException("Error while fetching transaction information for accountId : "+accountId);
+  		}
+  	}
 }
-

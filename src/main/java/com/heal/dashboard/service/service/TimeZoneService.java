@@ -2,7 +2,7 @@ package com.heal.dashboard.service.service;
 
 
 
-import com.heal.dashboard.service.businesslogic.UserTimezoneBL;
+import com.heal.dashboard.service.businesslogic.timezone.UserTimezoneBL;
 import com.heal.dashboard.service.entities.UserTimezonePojo;
 import com.heal.dashboard.service.exception.ClientException;
 import com.heal.dashboard.service.exception.CustomExceptionHandler;

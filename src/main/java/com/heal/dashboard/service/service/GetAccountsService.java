@@ -2,7 +2,7 @@ package com.heal.dashboard.service.service;
 
 import java.util.List;
 
-import com.heal.dashboard.service.businesslogic.GetAccountsBL;
+import com.heal.dashboard.service.businesslogic.account.GetAccountsBL;
 import com.heal.dashboard.service.entities.AccountBean;
 import com.heal.dashboard.service.entities.UserAccessAccountsBean;
 import com.heal.dashboard.service.entities.UtilityBean;

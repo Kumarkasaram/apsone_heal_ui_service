@@ -5,7 +5,7 @@ package com.heal.dashboard.service.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.heal.dashboard.service.businesslogic.GetAccountsBL;
+import com.heal.dashboard.service.businesslogic.account.GetAccountsBL;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

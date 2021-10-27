@@ -1,5 +1,6 @@
 package com.heal.dashboard.service.pojo;
 
+
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,9 +14,9 @@ public class RequestObject<T> {
     private T body;
     private Map<String, String> params = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private Map<String, String> headers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    private Map<String, String[]> queryParams = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private Map<String, String> queryParams = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
-    public void addQueryParam(String key, String[] value) {
+    public void addQueryParam(String key, String value) {
         queryParams.put(key, value);
     }
 

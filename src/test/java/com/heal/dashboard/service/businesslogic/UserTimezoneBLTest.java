@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.heal.dashboard.service.businesslogic.timezone.UserTimezoneBL;
 import com.heal.dashboard.service.dao.mysql.TimezoneDao;
 import com.heal.dashboard.service.entities.TagDetails;
 import com.heal.dashboard.service.entities.TagMapping;

@@ -15,11 +15,12 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
+import com.heal.dashboard.service.businesslogic.account.GetAccountsBL;
 import com.heal.dashboard.service.dao.mysql.AccountDao;
 import com.heal.dashboard.service.entities.AccountBean;
 import com.heal.dashboard.service.entities.AccountMappingBean;
 import com.heal.dashboard.service.entities.UserAccessAccountsBean;
-import com.heal.dashboard.service.entities.UserAccessDetails;
+import com.heal.dashboard.service.entities.UserAccessBean;
 import com.heal.dashboard.service.entities.UtilityBean;
 import com.heal.dashboard.service.exception.ClientException;
 import com.heal.dashboard.service.exception.ServerException;
@@ -37,7 +38,7 @@ public class GetAccountsBLTest {
     @Mock
     List<AccountBean> accountBeansList;
     @Mock
-    UserAccessDetails userAccessDetails;
+    UserAccessBean userAccessDetails;
     
     UserAccessAccountsBean accessAccountsBean;
     RequestObject<String> requestObject;
@@ -53,7 +54,7 @@ public class GetAccountsBLTest {
         accountBeansList.add(accountBean);
 
 //      setting up mock data in  userAccessDetails
-        userAccessDetails = new UserAccessDetails();
+        userAccessDetails = new UserAccessBean();
         userAccessDetails.setAccessDetails("{\"accounts\": [\"*\"]}");
         userAccessDetails.setId(1);
         userAccessDetails.setUpdatedTime(LocalDateTime.now());

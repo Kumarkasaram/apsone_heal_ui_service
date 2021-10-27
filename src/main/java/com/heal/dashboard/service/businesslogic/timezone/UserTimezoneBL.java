@@ -1,12 +1,7 @@
-package com.heal.dashboard.service.businesslogic;
+package com.heal.dashboard.service.businesslogic.timezone;
 
 
 
-import com.heal.dashboard.service.dao.mysql.TimezoneDao;
-import com.heal.dashboard.service.entities.TagDetails;
-import com.heal.dashboard.service.exception.ClientException;
-import com.heal.dashboard.service.exception.DataProcessingException;
-import com.heal.dashboard.service.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
@@ -14,12 +9,18 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.heal.dashboard.service.businesslogic.BusinessLogic;
+import com.heal.dashboard.service.dao.mysql.TimezoneDao;
+import com.heal.dashboard.service.entities.TagDetails;
 import com.heal.dashboard.service.entities.TagMapping;
 import com.heal.dashboard.service.entities.TimezoneDetail;
 import com.heal.dashboard.service.entities.UserAttributeBeen;
 import com.heal.dashboard.service.entities.UserDetailsBean;
 import com.heal.dashboard.service.entities.UserTimezoneRequestData;
 import com.heal.dashboard.service.entities.UtilityBean;
+import com.heal.dashboard.service.exception.ClientException;
+import com.heal.dashboard.service.exception.DataProcessingException;
+import com.heal.dashboard.service.exception.ServerException;
 import com.heal.dashboard.service.pojo.RequestObject;
 import com.heal.dashboard.service.util.Constants;
 import com.heal.dashboard.service.util.DateUtil;
@@ -30,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserTimezoneBL implements BusinessLogic<UserTimezoneRequestData, UserTimezoneRequestData, String> {
 
 	@Autowired
-    TimezoneDao timezoneDao;
+	TimezoneDao timezoneDao;
 	
 	@Override
 	public UtilityBean<UserTimezoneRequestData> clientValidation(RequestObject<UserTimezoneRequestData> requestObject)
@@ -137,4 +138,3 @@ public class UserTimezoneBL implements BusinessLogic<UserTimezoneRequestData, Us
 
 	
 }
-

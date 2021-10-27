@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @PropertySource(value="classpath:conf.properties")
 @ComponentScan
-//@EnableTransactionManagement(proxyTargetClass = true)
+@EnableTransactionManagement(proxyTargetClass = true)
 @Slf4j
 public class HealServiceMain {
     public static void main(String[] args) {
