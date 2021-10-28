@@ -16,6 +16,20 @@
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 		<timestamp>${maven.build.timestamp}</timestamp>
 	</properties>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>appnomic-nexus-repository</id>
+			<name>Appnomic Internal Repository</name>
+			<url>http://192.168.13.69:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+
+		<repository>
+			<id>appnomic-nexus-repository</id>
+			<name>Appnomic Internal Repository</name>
+			<url>http://192.168.13.69:8081/nexus/content/repositories/releases/</url>
+		</repository>
+	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -197,7 +211,7 @@
 						<configuration>
 							<artifacts>
 								<artifact>
-									<file>target/${project.artifactId}_${project.version}.tar.gz</file>
+									<file>target/${project.artifactId}-${project.version}-bin.tar.gz</file>
 									<type>tar.gz</type>
 								</artifact>
 							</artifacts>
