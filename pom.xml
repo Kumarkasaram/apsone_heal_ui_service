@@ -108,7 +108,7 @@
 	</dependencies>
 
 	<build>
-		<resources>
+		<!-- <resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<excludes>
@@ -116,7 +116,7 @@
 				</excludes>
 				<filtering>false</filtering>
 			</resource>
-		</resources>
+		</resources> -->
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -124,7 +124,7 @@
 				<version>${project.parent.version}</version>
 			</plugin>
 
-			<plugin>
+		<!-- 	<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
@@ -134,12 +134,12 @@
 							<classpathPrefix>./lib/</classpathPrefix>
 							<mainClass>com.heal.dashboard.service.HealServiceMain</mainClass>
 						</manifest>
-						<manifestEntries>
+						 <manifestEntries>
 							<Class-Path>./config/</Class-Path>
 						</manifestEntries>
 					</archive>
 				</configuration>
-			</plugin>
+			</plugin> -->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -187,7 +187,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>1.3</version>
-				<executions>
+				<!-- <executions>
 					<execution>
 						<id>attach-distribution</id>
 						<phase>package</phase>
@@ -203,7 +203,7 @@
 							</artifacts>
 						</configuration>
 					</execution>
-				</executions>
+				</executions> -->
 			</plugin>
 		</plugins>
 	</build>

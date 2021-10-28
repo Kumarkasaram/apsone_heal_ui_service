@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class UserAccessDetails extends BaseEntity {
 
 	private List<String> applicationIdentifiers;

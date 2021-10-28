@@ -10,13 +10,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @PropertySource(value="classpath:conf.properties")
-@ComponentScan
 @EnableTransactionManagement(proxyTargetClass = true)
 @Slf4j
 public class HealServiceMain {
     public static void main(String[] args) {
         log.info("Heal dashboard service main is starting.......");
-        System.setProperty("logging.config", "classpath:logback.xml");
+       // System.setProperty("logging.config", "classpath:logback.xml");
         SpringApplication.run(HealServiceMain.class, args);
     }
 }
