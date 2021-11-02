@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.heal.dashboard.service.entities.AccountBean;
 import com.heal.dashboard.service.entities.ApplicationDetailBean;
+import com.heal.dashboard.service.entities.DateComponentDetailBean;
+import com.heal.dashboard.service.entities.MasterFeatureDetails;
 import com.heal.dashboard.service.entities.topology.TopologyDetails;
 import com.heal.dashboard.service.service.GetAccountsService;
 import com.heal.dashboard.service.service.TopologyDetailsService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -73,6 +74,25 @@ public class AccountController {
     @RequestMapping(value = "/accounts/{identifier}/topology", method = RequestMethod.GET)
     public ResponseEntity<TopologyDetails> getTopologyDetails(@RequestHeader(value = "Authorization") String auth,@PathVariable("identifier") String identifier,@RequestParam(value ="applicationId",required=false) String applicationId) {
        TopologyDetails response = topologyDetailsService.getTopologyDetails(auth,identifier,applicationId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
+    @ApiOperation(value = "Retrieve features List", response = AccountBean.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved data"),
+            @ApiResponse(code = 500, message = "Internal Server Error"),
+            @ApiResponse(code = 400, message = "Invalid Request")})
+    @RequestMapping(value = "/features", method = RequestMethod.GET)
+    public ResponseEntity<MasterFeatureDetails> getMasterFeatures() {
+        MasterFeatureDetails response = getAccountsService.getMasterFeatures();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @ApiOperation(value = "Retrieve Date Component Drop Down List", response = AccountBean.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved data"),
+            @ApiResponse(code = 500, message = "Internal Server Error"),
+            @ApiResponse(code = 400, message = "Invalid Request")})
+    @RequestMapping(value = "/date-components", method = RequestMethod.GET)
+    public ResponseEntity<DateComponentDetailBean> getDateTimeDropdownList() {
+        DateComponentDetailBean response = getAccountsService.getDateTimeDropdownList();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
