@@ -2,8 +2,11 @@ package com.heal.dashboard.service.service;
 
 import java.util.List;
 
+import com.heal.dashboard.service.businesslogic.account.ApplicationBL;
 import com.heal.dashboard.service.businesslogic.account.GetAccountsBL;
 import com.heal.dashboard.service.entities.AccountBean;
+import com.heal.dashboard.service.entities.ApplicationDetailBean;
+import com.heal.dashboard.service.entities.ApplicationResponseBean;
 import com.heal.dashboard.service.entities.UserAccessAccountsBean;
 import com.heal.dashboard.service.entities.UtilityBean;
 import com.heal.dashboard.service.exception.ClientException;
@@ -22,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class GetAccountsService {
     @Autowired
     GetAccountsBL getAccountsBL;
+    @Autowired
+    ApplicationBL applicationBL;
 
     public List<AccountBean> getAccountList(String authorizationToken) {
         RequestObject<String> requestObject = new RequestObject<String>();
@@ -37,6 +42,23 @@ public class GetAccountsService {
 			throw new RuntimeException(e.getMessage());
 		}
         return accounts;
+    }
+    
+    public List<ApplicationDetailBean> getApplicationList(String authorizationToken,String identifier) {
+        RequestObject<String> requestObject = new RequestObject<String>();
+        requestObject.addHeaders(Constants.AUTHORIZATION_TOKEN, authorizationToken);
+        requestObject.setBody(identifier);
+        List<ApplicationDetailBean> applicationDetailBean;
+        try {
+            UtilityBean<String> utilityBean = applicationBL.clientValidation(requestObject);
+            ApplicationResponseBean applicationResponseBean = applicationBL.serverValidation(utilityBean);
+            applicationDetailBean = applicationBL.process(applicationResponseBean);
+        } catch (ServerException | DataProcessingException | ClientException  e) {
+			throw new CustomExceptionHandler(e.getMessage());
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+        return applicationDetailBean;
     }
 }
 
