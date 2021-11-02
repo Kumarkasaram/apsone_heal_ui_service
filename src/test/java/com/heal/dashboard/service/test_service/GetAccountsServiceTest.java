@@ -14,9 +14,12 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
+import com.heal.dashboard.service.businesslogic.account.ApplicationBL;
 import com.heal.dashboard.service.businesslogic.account.GetAccountsBL;
 import com.heal.dashboard.service.entities.AccountBean;
 import com.heal.dashboard.service.entities.AccountMappingBean;
+import com.heal.dashboard.service.entities.ApplicationDetailBean;
+import com.heal.dashboard.service.entities.ApplicationResponseBean;
 import com.heal.dashboard.service.entities.UserAccessAccountsBean;
 import com.heal.dashboard.service.entities.UserAccessBean;
 import com.heal.dashboard.service.entities.UtilityBean;
@@ -38,9 +41,14 @@ public class GetAccountsServiceTest {
     List<AccountBean> accountBeansList;
     @Mock
     UserAccessBean userAccessDetails;
-   
+    @Mock
+	ApplicationBL applicationBL;
+    
     UserAccessAccountsBean accessAccountsBean;
     RequestObject requestObject;
+    
+    List<ApplicationDetailBean> applicationDetailBeanList;
+    ApplicationResponseBean applicationResponseBean;
     
     @Before
     public void setup() {
@@ -85,6 +93,20 @@ public class GetAccountsServiceTest {
 	        Mockito.when(getAccountBL.serverValidation(Mockito.any())).thenReturn(accessAccountsBean);
 	        Mockito.when(getAccountBL.process(Mockito.any())).thenThrow(new RuntimeException());
 	        Assert.assertNull( getAccountsService.getAccountList("7640123a-fbde-4fe5-9812-581cd1e3a9c1"));
+	    }
+	    
+	    @Test
+	    public void getApplicationList_Success() throws Exception {
+	    	 applicationDetailBeanList = new ArrayList<>();
+	         ApplicationDetailBean applicationDetailBean = new ApplicationDetailBean();
+	         applicationDetailBean.setId(1);
+	         applicationDetailBean.setIdentifier("7640123a-fbde-4fe5-9812-581cd1e3a9c1");
+	         applicationDetailBean.setName("test");
+	         applicationDetailBeanList.add(applicationDetailBean);       
+	        Mockito.when(applicationBL.clientValidation(Mockito.any())).thenReturn(UtilityBean.<String>builder().pojoObject("7640123a-fbde-4fe5-9812-581cd1e3a9c1").build());
+	        Mockito.when(applicationBL.serverValidation(Mockito.any())).thenReturn(new ApplicationResponseBean());
+	        Mockito.when(applicationBL.process(Mockito.any())).thenReturn(applicationDetailBeanList);
+	        Assert.assertEquals("test", getAccountsService.getApplicationList("7640123a-fbde-4fe5-9812-581cd1e3a9c1","").get(0).getName());
 	    }
 	
 }
