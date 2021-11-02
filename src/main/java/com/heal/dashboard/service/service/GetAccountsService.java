@@ -3,10 +3,16 @@ package com.heal.dashboard.service.service;
 import java.util.List;
 
 import com.heal.dashboard.service.businesslogic.account.ApplicationBL;
+import com.heal.dashboard.service.businesslogic.account.DateComponentBL;
 import com.heal.dashboard.service.businesslogic.account.GetAccountsBL;
+import com.heal.dashboard.service.businesslogic.account.MasterFeaturesBL;
 import com.heal.dashboard.service.entities.AccountBean;
 import com.heal.dashboard.service.entities.ApplicationDetailBean;
 import com.heal.dashboard.service.entities.ApplicationResponseBean;
+import com.heal.dashboard.service.entities.DateComponentBean;
+import com.heal.dashboard.service.entities.DateComponentDetailBean;
+import com.heal.dashboard.service.entities.MasterFeatureDetails;
+import com.heal.dashboard.service.entities.MasterFeaturesBean;
 import com.heal.dashboard.service.entities.UserAccessAccountsBean;
 import com.heal.dashboard.service.entities.UtilityBean;
 import com.heal.dashboard.service.exception.ClientException;
@@ -15,6 +21,7 @@ import com.heal.dashboard.service.exception.DataProcessingException;
 import com.heal.dashboard.service.exception.ServerException;
 import com.heal.dashboard.service.pojo.RequestObject;
 import com.heal.dashboard.service.util.Constants;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +34,10 @@ public class GetAccountsService {
     GetAccountsBL getAccountsBL;
     @Autowired
     ApplicationBL applicationBL;
+    @Autowired
+    MasterFeaturesBL masterFeaturesBL;
+    @Autowired
+    DateComponentBL dateComponentBL;
 
     public List<AccountBean> getAccountList(String authorizationToken) {
         RequestObject<String> requestObject = new RequestObject<String>();
@@ -60,5 +71,36 @@ public class GetAccountsService {
 		}
         return applicationDetailBean;
     }
+    
+    public MasterFeatureDetails getMasterFeatures() {
+        RequestObject<String> requestObject = new RequestObject<>();
+        MasterFeatureDetails response = null;
+        try{
+            UtilityBean<String> utilityBean = masterFeaturesBL.clientValidation(requestObject);
+            List<MasterFeaturesBean> masterFeaturesBeans =masterFeaturesBL.serverValidation(utilityBean);
+            response = masterFeaturesBL.process(masterFeaturesBeans);
+        } catch (ServerException | DataProcessingException | ClientException  e) {
+			throw new CustomExceptionHandler(e.getMessage());
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+        return response;
+    }
+
+    public DateComponentDetailBean getDateTimeDropdownList() {
+        RequestObject<String> requestObject = new RequestObject<>();
+        DateComponentDetailBean response = null;
+        try{
+            UtilityBean<String> utilityBean = dateComponentBL.clientValidation(requestObject);
+            List<DateComponentBean> dateComponentBeans =dateComponentBL.serverValidation(utilityBean);
+            response = dateComponentBL.process(dateComponentBeans);
+        } catch (ServerException | DataProcessingException | ClientException  e) {
+			throw new CustomExceptionHandler(e.getMessage());
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+        return response;
+    }
+
 }
 
