@@ -2,17 +2,15 @@ package com.heal.dashboard.service.businesslogic.account;
 
 
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
-import com.heal.dashboard.service.businesslogic.*;
+import com.heal.dashboard.service.businesslogic.BusinessLogic;
 import com.heal.dashboard.service.businesslogic.CommonServiceBL;
 import com.heal.dashboard.service.dao.mysql.AccountDao;
 import com.heal.dashboard.service.entities.AccountBean;

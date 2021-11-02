@@ -22,7 +22,6 @@ import com.heal.dashboard.service.exception.DataProcessingException;
 import com.heal.dashboard.service.exception.ServerException;
 import com.heal.dashboard.service.pojo.RequestObject;
 import com.heal.dashboard.service.util.Constants;
-import com.heal.dashboard.service.util.Utility;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,8 +40,8 @@ public class GetAccountsBL implements BusinessLogic<String, UserAccessAccountsBe
             throw new ClientException(Constants.AUTHORIZATION_TOKEN_IS_NULL_OR_EMPTY);
         }
 
-        String userId = Utility.extractUserIdFromJWT(jwtToken);
-       
+       // String userId = Utility.extractUserIdFromJWT(jwtToken);
+       String userId =jwtToken;
         if(null == userId || userId.trim().isEmpty()) {
             throw new ClientException("User details extraction failure");
         }
