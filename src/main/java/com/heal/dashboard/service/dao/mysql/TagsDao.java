@@ -52,6 +52,14 @@ public class TagsDao {
 	  		}
 	  	}
 	
-	 
+	 public  List<TagMapping> getTagMappingDetailsByAccountId(int accountId) throws ServerException {
+	  		try {
+	  			String query = "select id, tag_id , object_id , object_ref_table , tag_key , tag_value,created_time createdTime,updated_time updatedTime,account_id accountId,user_details_id userDetailsId  from tag_mapping where account_id = ?";
+	  			return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(TagMapping.class),accountId);
+	  		} catch (DataAccessException e) {
+	  			log.error("Error while fetching tag_mapping information", e);
+	  			throw new ServerException("Error in getTagMappingDetailsByAccountId() method while fetching tag_mapping information for accountId : "+accountId);
+	  		}
+	  	}
 
 }

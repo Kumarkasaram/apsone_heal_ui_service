@@ -5,9 +5,11 @@ package com.heal.dashboard.service.businesslogic;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.datastax.driver.core.Row;
+import com.heal.dashboard.service.dao.mysql.AccountCassandraDao;
 import com.heal.dashboard.service.entities.AccountBean;
 
 import lombok.Data;
@@ -19,11 +21,13 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class MaintainanceWindowsBL {
 
+	@Autowired
+	AccountCassandraDao accountCassandraDao; 
 	
 	public boolean getServiceMaintenanceStatus(AccountBean account, String serviceId, Timestamp toTime){
         try {
             List<Row> completedMaintenanceWindows = null;
-           // completedMaintenanceWindows = getServiceMaintenanceWindowList(account.getIdentifier(), serviceId);
+            completedMaintenanceWindows = accountCassandraDao.getServiceMaintenanceWindowList(account.getIdentifier(), serviceId);
             if(!completedMaintenanceWindows.isEmpty())
                 for(Row maintenanceWindow : completedMaintenanceWindows){
                     Timestamp startTimeMW = new Timestamp(maintenanceWindow.getLong("start_time"));

@@ -1,7 +1,5 @@
 package com.heal.dashboard.service.entities;
 
-
-
 import java.util.List;
 
 import lombok.AllArgsConstructor;

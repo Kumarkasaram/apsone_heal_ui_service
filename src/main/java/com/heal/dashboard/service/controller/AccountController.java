@@ -17,6 +17,7 @@ import com.heal.dashboard.service.entities.AccountBean;
 import com.heal.dashboard.service.entities.ApplicationDetailBean;
 import com.heal.dashboard.service.entities.DateComponentDetailBean;
 import com.heal.dashboard.service.entities.MasterFeatureDetails;
+import com.heal.dashboard.service.entities.applicationhealth.ApplicationHealthDetail;
 import com.heal.dashboard.service.entities.topology.TopologyDetails;
 import com.heal.dashboard.service.service.GetAccountsService;
 import com.heal.dashboard.service.service.TopologyDetailsService;
@@ -93,6 +94,17 @@ public class AccountController {
     @RequestMapping(value = "/date-components", method = RequestMethod.GET)
     public ResponseEntity<DateComponentDetailBean> getDateTimeDropdownList() {
         DateComponentDetailBean response = getAccountsService.getDateTimeDropdownList();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
+    @ApiOperation(value = "Retrieve Application Health", response = AccountBean.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved data"),
+            @ApiResponse(code = 500, message = "Internal Server Error"),
+            @ApiResponse(code = 400, message = "Invalid Request")})
+    @RequestMapping(value = "/accounts/{identifier}/application-health", method = RequestMethod.GET)
+    public ResponseEntity< List<ApplicationHealthDetail>> getApplicationHealthStatus(@RequestHeader(value = "Authorization") String authorizationToken,@PathVariable(value = "identifier") String identifier,
+                                                                              @RequestParam(value = "toTime") String toTimeString) {
+        List<ApplicationHealthDetail> response = getAccountsService.getApplicationHealthStatus(identifier, toTimeString,authorizationToken);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

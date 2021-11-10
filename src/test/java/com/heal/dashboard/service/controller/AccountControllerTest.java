@@ -15,13 +15,17 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.heal.dashboard.service.businesslogic.account.GetAccountsBL;
 import com.heal.dashboard.service.entities.AccountBean;
 import com.heal.dashboard.service.entities.ApplicationDetailBean;
 import com.heal.dashboard.service.entities.DateComponentDetailBean;
 import com.heal.dashboard.service.entities.MasterFeatureDetails;
+import com.heal.dashboard.service.entities.applicationhealth.ApplicationHealthDetail;
 import com.heal.dashboard.service.entities.topology.Edges;
 import com.heal.dashboard.service.entities.topology.Nodes;
 import com.heal.dashboard.service.entities.topology.TopologyDetails;
@@ -135,4 +139,11 @@ public class AccountControllerTest {
         accountcontroller.getDateTimeDropdownList();
     }
 
+    @Test
+	public void getApplicationHealthStatus() {
+    	List<ApplicationHealthDetail> applicationHealthList = new ArrayList<ApplicationHealthDetail>();
+        Mockito.when(getAccountService.getApplicationHealthStatus(Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(applicationHealthList);
+        Assert.assertEquals(HttpStatus.OK, accountcontroller.getApplicationHealthStatus("","","").getStatusCode());
+
+}
 }
