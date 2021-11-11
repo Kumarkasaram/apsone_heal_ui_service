@@ -13,7 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.datastax.driver.core.Row;
+
+import com.datastax.oss.driver.api.core.cql.Row;
 import com.heal.dashboard.service.businesslogic.account.ApplicationHealthBL;
 import com.heal.dashboard.service.dao.mysql.AccountCassandraDao;
 import com.heal.dashboard.service.dao.mysql.AccountDao;

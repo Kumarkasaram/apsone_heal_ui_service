@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.datastax.driver.core.Row;
+import com.datastax.oss.driver.api.core.cql.Row;
 import com.heal.dashboard.service.dao.mysql.AccountCassandraDao;
 import com.heal.dashboard.service.entities.AccountBean;
 

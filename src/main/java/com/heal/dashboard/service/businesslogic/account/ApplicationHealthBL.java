@@ -15,7 +15,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.datastax.driver.core.Row;
+
+import com.datastax.oss.driver.api.core.cql.Row;
 import com.heal.dashboard.service.businesslogic.CommonServiceBL;
 import com.heal.dashboard.service.businesslogic.MaintainanceWindowsBL;
 import com.heal.dashboard.service.dao.mysql.AccountDao;
@@ -106,9 +107,6 @@ public class ApplicationHealthBL
 			List<String> accessibleApplications = accessibleApps.parallelStream().map(Controller::getIdentifier).collect(Collectors.toList());
 			long time = System.currentTimeMillis();
 			try {
-				System.out.println("123s"+accessibleApps);
-				log.debug("123s"+accessibleApps);
-				
 				List<ApplicationHealthDetail> appHealthData = getOpenProblems(accountBean, problemList, accessibleApplications);
 				
 				if (accessibleApplications.size() != appHealthData.size()) {
@@ -165,7 +163,7 @@ public class ApplicationHealthBL
 		List<Row> signalList = null;
 		Set<String> signalIds = accountCassandraDao.getSignalId(accountIdentifier, fromTime, toTime);
 		if (signalIds != null) {
-			signalList = accountCassandraDao.getSignalList(signalIds);
+			signalList = accountCassandraDao.getSignalList(signalIds);	
 		}
 		return signalList;
 	}
@@ -251,6 +249,7 @@ public class ApplicationHealthBL
 		Map<Integer, ApplicationHealthDetail> result = new HashMap<>();
 		Timestamp date = new Timestamp(DateUtil.getDateInGMT(System.currentTimeMillis()).getTime());
 		List<ViewTypeBean> viewTypesList = masterDataDao.getAllViewTypes();	
+		System.out.println("test123"+viewTypesList);
 		appIdVsServiceIdentifiers.forEach((appId, serviceIdentifiers) -> {
 			ApplicationHealthDetail temp = new ApplicationHealthDetail();
 			boolean isWindow = serviceIdentifiers.parallelStream().allMatch(service -> maintenancWindowBL
