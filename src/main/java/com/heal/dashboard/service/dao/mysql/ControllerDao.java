@@ -74,6 +74,16 @@ public class ControllerDao {
 	  		}
 	  	}
 	    
+	    public  List<Controller> getApplicationList(int accountId) throws ServerException {
+	  		try {
+	  			String query = "select id as appId,name as name,controller_type_id as controllerTypeId,identifier as identifier,status as status,user_details_id as createdBy,created_time as createdOn, updated_time as updatedTime ,account_id as accountId from controller where account_id = ? and status = 1 and controller_type_id = 191";
+	  			return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Controller.class),accountId);
+	  		} catch (DataAccessException e) {
+	  			log.error("Error while fetching ApplicationList information", e);
+	  			throw new ServerException("Error in ControllerDao.getApplicationList while fetching ApplicationList information for accountId : "+accountId);
+	  		}
+	  	}
+	    
 	  
 
 }

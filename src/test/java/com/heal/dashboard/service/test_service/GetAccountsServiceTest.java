@@ -15,12 +15,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
 import com.heal.dashboard.service.businesslogic.account.ApplicationBL;
+import com.heal.dashboard.service.businesslogic.account.ApplicationHealthBL;
 import com.heal.dashboard.service.businesslogic.account.DateComponentBL;
 import com.heal.dashboard.service.businesslogic.account.GetAccountsBL;
 import com.heal.dashboard.service.businesslogic.account.MasterFeaturesBL;
 import com.heal.dashboard.service.entities.AccountBean;
 import com.heal.dashboard.service.entities.AccountMappingBean;
 import com.heal.dashboard.service.entities.ApplicationDetailBean;
+import com.heal.dashboard.service.entities.ApplicationHealthResponse;
 import com.heal.dashboard.service.entities.ApplicationResponseBean;
 import com.heal.dashboard.service.entities.DateComponentBean;
 import com.heal.dashboard.service.entities.DateComponentDetailBean;
@@ -29,6 +31,7 @@ import com.heal.dashboard.service.entities.MasterFeaturesBean;
 import com.heal.dashboard.service.entities.UserAccessAccountsBean;
 import com.heal.dashboard.service.entities.UserAccessBean;
 import com.heal.dashboard.service.entities.UtilityBean;
+import com.heal.dashboard.service.entities.applicationhealth.ApplicationHealthDetail;
 import com.heal.dashboard.service.exception.ClientException;
 import com.heal.dashboard.service.pojo.RequestObject;
 import com.heal.dashboard.service.service.GetAccountsService;
@@ -51,6 +54,9 @@ public class GetAccountsServiceTest {
 	DateComponentBL dateComponentBL;
 	@Mock
 	MasterFeaturesBL masterFeaturesBL;
+	@Mock
+	ApplicationHealthBL applicationHealthBL;
+
 
 	UserAccessAccountsBean accessAccountsBean;
 	RequestObject requestObject;
@@ -163,6 +169,21 @@ public class GetAccountsServiceTest {
 		masterFeaturesBeans.add(masterFeaturesBean);
 		MasterFeatureDetails response = new MasterFeatureDetails(masterFeaturesBeans);
 		return response;
+	}
+	
+	@Test
+	public void getApplicationHealthStatus() throws Exception {
+		List<ApplicationHealthDetail> applicationHealthDetailsList = new ArrayList<>();
+		ApplicationHealthDetail applicationHealthDetail = new ApplicationHealthDetail();
+		applicationHealthDetail.setId(1);
+		applicationHealthDetail.setIdentifier("7640123a-fbde-4fe5-9812-581cd1e3a9c1");
+		applicationHealthDetail.setName("test");
+		applicationHealthDetailsList.add(applicationHealthDetail);
+		Mockito.when(applicationHealthBL.clientValidation(Mockito.any()))
+				.thenReturn(UtilityBean.<String>builder().authToken("7640123a-fbde-4fe5-9812-581cd1e3a9c1").accountIdentifier("7640123a-fbde-4fe5-9812-581cd1e3a9c1").pojoObject("2").build());
+		Mockito.when(applicationHealthBL.serverValidation(Mockito.any())).thenReturn(new ApplicationHealthResponse());
+		Mockito.when(applicationHealthBL.process(Mockito.any())).thenReturn(applicationHealthDetailsList);
+		Assert.assertEquals("7640123a-fbde-4fe5-9812-581cd1e3a9c1", getAccountsService.getApplicationHealthStatus("7640123a-fbde-4fe5-9812-581cd1e3a9c1","3","7640123a-fbde-4fe5-9812-581cd1e3a9c1").get(0).getIdentifier());
 	}
 
 }

@@ -198,6 +198,57 @@ public class CommonServiceBL {
 	                (System.currentTimeMillis() - start));
 	        return txnList;
 }
+		
+		public  List<Controller> getAccessibleApplicationsForUser(String userIdentifier, String accountIdentifier,String accountId) throws ServerException {
+	        com.heal.dashboard.service.entities.UserAccessBean userAcessBean;
+	        try{
+	        	userAcessBean = accountDao.fetchUserAccessDetailsUsingIdentifier(userIdentifier);
+	        } catch (ServerException e) {
+	            log.error("Error while fetching user access bean");
+	            return new ArrayList<>();
+	        }
+	        if (userAcessBean == null) {
+	            log.error("User access bean unavailable for user [{}] and account [{}]", userIdentifier, accountIdentifier);
+	            return new ArrayList<>();
+	        }
+
+	        AccountMappingBean   accountMappingBean = new Gson().fromJson(userAcessBean.getAccessDetails(), AccountMappingBean.class);
+
+	        if (accountMappingBean != null && accountMappingBean.getAccounts() != null) {
+	            if (accountMappingBean.getAccounts().contains(accountIdentifier)) {
+	                int accessibleAccountId = Integer.parseInt(accountId);
+
+	                Map<String,List<String>> accessibleApplications = accountMappingBean.getAccountMapping();
+
+	                if (accessibleApplications == null || accessibleApplications.isEmpty()) {
+	                    log.error("There no applications mapped to account [{}] and user [{}]");
+	                   
+	                    return null;
+	                }
+
+	            ApplicationBean applicationIdentifiers = (ApplicationBean) accessibleApplications.get(accountIdentifier);
+	            List<Controller> applicationControllerList = controllerDao.getApplicationList(accessibleAccountId);
+
+	            if (applicationIdentifiers.getApplications().contains("*")) {
+	                return applicationControllerList;
+	            } else {
+	                return applicationControllerList.parallelStream()
+	                        .filter(app -> (applicationIdentifiers.getApplications().contains(app.getIdentifier())))
+	                        .collect(Collectors.toList());
+
+	            }
+	        } else if (accountMappingBean.getAccounts().contains("*")) {
+	            int accessibleAccountId = Integer.parseInt(accountId);
+
+	            return controllerDao.getApplicationList(accessibleAccountId);
+	        }
+
+	        return new ArrayList<>();
+	    }
+	        return new ArrayList<>();
+	       
+}
+		
 	 
 }
 
